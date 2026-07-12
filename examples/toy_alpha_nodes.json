@@ -1,0 +1,106 @@
+{
+  "nodes": [
+    {
+      "id": "ALPHA:1.0:AC-1",
+      "framework": "ALPHA",
+      "version": "1.0",
+      "native_ref": "AC-1",
+      "node_type": "requirement",
+      "title": "Unique user accounts",
+      "raw_text": "All user accounts must be uniquely attributable to one named individual. Shared or generic logins are prohibited except for documented, specifically-approved service accounts.",
+      "canonical_intent": "requires: unique, individually attributable user accounts; in order to: ensure every system action can be traced to one accountable person.",
+      "parent_id": null,
+      "extra": {
+        "doc": "toy_alpha"
+      },
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_dim": null
+    },
+    {
+      "id": "ALPHA:1.0:AC-2",
+      "framework": "ALPHA",
+      "version": "1.0",
+      "native_ref": "AC-2",
+      "node_type": "requirement",
+      "title": "Multi-factor authentication for remote access",
+      "raw_text": "Remote access to internal systems must require multi-factor authentication; a password alone is not sufficient.",
+      "canonical_intent": "requires: multi-factor authentication for remote access; in order to: prevent unauthorised access using a compromised password alone.",
+      "parent_id": null,
+      "extra": {
+        "doc": "toy_alpha"
+      },
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_dim": null
+    },
+    {
+      "id": "ALPHA:1.0:AC-3",
+      "framework": "ALPHA",
+      "version": "1.0",
+      "native_ref": "AC-3",
+      "node_type": "requirement",
+      "title": "Periodic access review",
+      "raw_text": "User access rights must be reviewed at least every six months, and any access no longer required must be revoked as a result of that review.",
+      "canonical_intent": "requires: six-monthly review of user access rights with revocation of unneeded access; in order to: stop unnecessary privileges accumulating over time.",
+      "parent_id": null,
+      "extra": {
+        "doc": "toy_alpha"
+      },
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_dim": null
+    },
+    {
+      "id": "ALPHA:1.0:AC-4",
+      "framework": "ALPHA",
+      "version": "1.0",
+      "native_ref": "AC-4",
+      "node_type": "requirement",
+      "title": "Privileged account activity logging",
+      "raw_text": "All actions performed under a privileged account must be logged, and the logs retained for at least twelve months.",
+      "canonical_intent": "requires: logging privileged account activity and keeping the logs for twelve months; in order to: support investigation of privileged misuse after the fact.",
+      "parent_id": null,
+      "extra": {
+        "doc": "toy_alpha"
+      },
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_dim": null
+    },
+    {
+      "id": "ALPHA:1.0:AC-5",
+      "framework": "ALPHA",
+      "version": "1.0",
+      "native_ref": "AC-5",
+      "node_type": "requirement",
+      "title": "Least privilege",
+      "raw_text": "Access to systems and data must be limited to the minimum necessary for a person to perform their role.",
+      "canonical_intent": "requires: granting only the minimum access needed for a person's role; in order to: limit the damage a single compromised account can do.",
+      "parent_id": null,
+      "extra": {
+        "doc": "toy_alpha"
+      },
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_dim": null
+    },
+    {
+      "id": "ALPHA:1.0:AC-6",
+      "framework": "ALPHA",
+      "version": "1.0",
+      "native_ref": "AC-6",
+      "node_type": "requirement",
+      "title": "Timely removal of leaver access",
+      "raw_text": "A person's access rights must be revoked no later than one working day after they leave the organisation or change to a role that no longer needs that access.",
+      "canonical_intent": "requires: revoking access within one working day of someone leaving or changing role; in order to: prevent former staff or role-changers retaining access they should no longer have.",
+      "parent_id": null,
+      "extra": {
+        "doc": "toy_alpha"
+      },
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_dim": null
+    }
+  ]
+}

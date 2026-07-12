@@ -1,0 +1,15 @@
+# Pipeline working files — regenerate by re-running the pipeline
+crosswalk/out/
+embed_cache.json
+validation/out/
+
+# Generated framework node files. Everyone generates their own from their
+# own licensed source texts, so these aren't tracked — except the two sets
+# that are meant to ship with the kit.
+*_nodes.json
+!crosswalk/data/caf_4_0_nodes.json
+!examples/*.json
+
+# Python
+__pycache__/
+.venv/

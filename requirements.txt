@@ -1,0 +1,11 @@
+# Core dependencies for the adapt / canonicalise / embed / candidates /
+# adjudicate / verify / load pipeline.
+numpy
+httpx
+neo4j
+
+# openpyxl is only needed inside validation/ (reading the Secure Controls
+# Framework spreadsheet you download yourself) — it is not required for
+# the main pipeline. Install it there if you run that step, or skip adding
+# it here altogether and just run:
+#   uv run --with openpyxl validation/some_script.py

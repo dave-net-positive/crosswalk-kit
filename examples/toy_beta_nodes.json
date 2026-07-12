@@ -1,0 +1,106 @@
+{
+  "nodes": [
+    {
+      "id": "BETA:1.0:OPS-1",
+      "framework": "BETA",
+      "version": "1.0",
+      "native_ref": "OPS-1",
+      "node_type": "requirement",
+      "title": "Production change logging",
+      "raw_text": "Every change made to a production system must be logged, recording who made the change and when it was made.",
+      "canonical_intent": "requires: logging who made a production change and when; in order to: provide an audit trail for changes to live systems.",
+      "parent_id": null,
+      "extra": {
+        "doc": "toy_beta"
+      },
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_dim": null
+    },
+    {
+      "id": "BETA:1.0:OPS-2",
+      "framework": "BETA",
+      "version": "1.0",
+      "native_ref": "OPS-2",
+      "node_type": "requirement",
+      "title": "Leaver access removal process",
+      "raw_text": "A documented joiners/movers/leavers process must ensure a leaver's system access is removed no later than their last working day.",
+      "canonical_intent": "requires: a documented process that removes a leaver's access by their last working day; in order to: prevent former staff retaining access after they leave.",
+      "parent_id": null,
+      "extra": {
+        "doc": "toy_beta"
+      },
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_dim": null
+    },
+    {
+      "id": "BETA:1.0:OPS-3",
+      "framework": "BETA",
+      "version": "1.0",
+      "native_ref": "OPS-3",
+      "node_type": "requirement",
+      "title": "Incident response plan",
+      "raw_text": "An incident response plan must be maintained and must be tested at least once a year.",
+      "canonical_intent": "requires: a maintained, annually tested incident response plan; in order to: ensure the organisation can respond effectively to an operational incident.",
+      "parent_id": null,
+      "extra": {
+        "doc": "toy_beta"
+      },
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_dim": null
+    },
+    {
+      "id": "BETA:1.0:OPS-4",
+      "framework": "BETA",
+      "version": "1.0",
+      "native_ref": "OPS-4",
+      "node_type": "requirement",
+      "title": "Backup restorability testing",
+      "raw_text": "Backups of production data must have their restorability tested at least quarterly.",
+      "canonical_intent": "requires: quarterly testing that production backups can actually be restored; in order to: ensure data can really be recovered when it is needed, not just that a backup file exists.",
+      "parent_id": null,
+      "extra": {
+        "doc": "toy_beta"
+      },
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_dim": null
+    },
+    {
+      "id": "BETA:1.0:OPS-5",
+      "framework": "BETA",
+      "version": "1.0",
+      "native_ref": "OPS-5",
+      "node_type": "requirement",
+      "title": "Independent change approval",
+      "raw_text": "A change to a production system must be approved by someone other than the person who implemented it.",
+      "canonical_intent": "requires: production changes to be approved by someone other than the implementer; in order to: reduce the risk of an unauthorised or mistaken change reaching production.",
+      "parent_id": null,
+      "extra": {
+        "doc": "toy_beta"
+      },
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_dim": null
+    },
+    {
+      "id": "BETA:1.0:OPS-6",
+      "framework": "BETA",
+      "version": "1.0",
+      "native_ref": "OPS-6",
+      "node_type": "requirement",
+      "title": "Capacity and performance monitoring",
+      "raw_text": "The capacity and performance of production systems must be monitored, with alerts configured against defined thresholds.",
+      "canonical_intent": "requires: monitoring production capacity and performance against defined thresholds with alerting; in order to: detect capacity problems before they cause an outage.",
+      "parent_id": null,
+      "extra": {
+        "doc": "toy_beta"
+      },
+      "embedding": null,
+      "embedding_model": null,
+      "embedding_dim": null
+    }
+  ]
+}
