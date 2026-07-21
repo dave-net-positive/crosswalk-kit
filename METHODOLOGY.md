@@ -341,11 +341,25 @@ reproduces the same answer). Downgrades from the refuter pass (typically
 judgment set with the refuter's specific objection appended to the
 `rationale`, not silently overwritten.
 
-*Does it actually catch anything?* In the reference deployment the refuter
-pass changed **293 verdicts**, of which **61 removed the relationship
-altogether** — a verification stage that never overturns anything is
-decoration, so this number is worth measuring rather than assuming. Two
-failure modes dominated, and both are systematic rather than random:
+*Does it actually catch anything?* Measure it, don't assume it. In the
+reference deployment's cross-framework run, the strong-claim pool selected
+by exactly the rule above (`EQUIVALENT` ∪ `PARTIAL` ≥ 0.8) was **112
+verdicts, of which the refuter overturned 72 — 64.3%.** Nearly two in three
+of the judgements the first pass was *most confident about* did not survive
+a second model whose only instruction was to argue against them.
+
+A separate, deliberately wider sweep over the internal corpus — reviewing
+well below the 0.8 confidence line, because the boilerplate problem below is
+systematic rather than confined to strong claims — produced a further **221
+downgrades, 61 of which removed the relationship entirely**. Its selection
+was broader than the documented rule, so it doesn't share a denominator with
+the 64.3% figure and shouldn't be quoted as one rate.
+
+The number worth carrying to any other LLM pipeline is not "we have a
+verification step" but the overturn rate and its direction. A refuter that
+overturns nothing is either looking at easy claims or not really refuting;
+one overturning 64% of its input is doing load-bearing work. Two failure
+modes dominated here, and both are systematic rather than random:
 
 - **A narrower internal implementation claiming `EQUIVALENT` with a broader
   external control.** A cloud-only clock-synchronisation rule was judged
@@ -538,7 +552,9 @@ measured funnel:
 | Verdicts returned (stage 5) | 14,346 |
 | — `no_relation`, dropped | 6,112 (42.6%) |
 | — typed edges kept | 8,234 |
-| Verdicts changed by refuter pass (stage 6) | 293 (61 edges removed) |
+| Strong-claim pool, cross-framework (stage 6) | 112 |
+| — overturned by refuter | 72 (**64.3%**) |
+| Downgrades from wider intra-corpus sweep | 221 (61 edges removed) |
 | Typed edges loaded | 8,455 |
 | `CONTAINS` hierarchy edges | 2,084 |
 | **Total relationships in graph** | **10,539** |

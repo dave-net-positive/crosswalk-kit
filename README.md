@@ -186,8 +186,9 @@ adjudicated with a subscription coding agent rather than API calls.
 | Adjudicated verdicts returned | **14,346** |
 | — dropped as `no_relation` | **6,112** (42.6%) |
 | — kept as typed edges | **8,234** |
-| Strong claims sent to adversarial verification | `EQUIVALENT` + high-confidence `PARTIAL` |
-| Verdicts changed by the verifier | **293** (of which **61** removed the edge entirely) |
+| Strong claims sent to adversarial verification (cross-framework) | **112** (`EQUIVALENT` + `PARTIAL` ≥ 0.8) |
+| — overturned by the verifier | **72 — 64.3%** |
+| Additional downgrades from the wider intra-corpus sweep | **221** (61 removed the edge entirely) |
 | Final edges loaded | **8,455** |
 
 Final relation mix: `PARTIAL` 5,070 · `SUPPORTS` 2,898 · `EQUIVALENT` 278 ·
@@ -196,13 +197,23 @@ Final relation mix: `PARTIAL` 5,070 · `SUPPORTS` 2,898 · `EQUIVALENT` 278 ·
 Two things worth reading off that table. First, **42.6% of everything the
 similarity search proposed was rejected on inspection** — which is the
 candidate stage working as designed, casting wide and letting adjudication
-do the discriminating, not a sign the embeddings were poor. Second, **the
-adversarial pass changed 293 verdicts and deleted 61 relationships
-outright.** A verification stage that never overturns anything is
-decoration; this one demonstrably does work, and the largest single class of
-correction was systematic — reused internal boilerplate being called
-`EQUIVALENT` to itself across documents when the shared template governs a
-different object in each instance.
+do the discriminating, not a sign the embeddings were poor. Second, and more
+uncomfortably: on the cross-framework run, **64.3% of high-confidence
+coverage claims did not survive adversarial challenge** — 72 of the 112
+verdicts the first pass was most sure about were wrong, and wrong in the
+direction that matters. An `EQUIVALENT` edge tells a downstream gap query
+"covered, stop looking". Roughly two in three of those confident verdicts
+would have told you an obligation was met when it wasn't.
+
+That is the entire argument for stage 6 existing. A verification stage that
+never overturns anything is decoration; the useful question to ask of any
+LLM pipeline making assertions you intend to rely on is not "does it have a
+review step" but "what percentage does that step overturn, and in which
+direction". A separate, deliberately wider sweep over the internal corpus
+produced a further 221 downgrades (61 removing the relationship entirely),
+dominated by one systematic error: reused boilerplate called `EQUIVALENT` to
+itself across documents, when the shared template governs a different object
+in each instance.
 
 The embedder itself was chosen by bake-off across five candidate models
 (`qwen3-embedding` at 0.6b/4b/8b, `bge-m3`, `snowflake-arctic-embed2`,
