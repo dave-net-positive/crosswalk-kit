@@ -217,7 +217,8 @@ through it. Environment variables carry all secrets: `NEO4J_URI`,
 `NEO4J_USERNAME`, `NEO4J_PASSWORD` for the graph, `CROSSWALK_OLLAMA_URL`
 for the embedder (defaults to `http://localhost:11434`).
 
-1. **Adapt** — one parser per framework, source text to node JSON. The CAF
+1. **Decompose** — one parser per framework, source text to node JSON:
+   documents in, requirement-bearing units out (§2). The CAF
    adapter's `__main__` takes positional arguments, not flags:
    ```
    uv run python crosswalk/adapters/caf_adapter.py path/to/caf_4_0.pdf crosswalk/data/caf_4_0_nodes.json
@@ -339,6 +340,28 @@ reproduces the same answer). Downgrades from the refuter pass (typically
 `EQUIVALENT` → `PARTIAL`, or `PARTIAL` → dropped) get merged back into the
 judgment set with the refuter's specific objection appended to the
 `rationale`, not silently overwritten.
+
+*Does it actually catch anything?* In the reference deployment the refuter
+pass changed **293 verdicts**, of which **61 removed the relationship
+altogether** — a verification stage that never overturns anything is
+decoration, so this number is worth measuring rather than assuming. Two
+failure modes dominated, and both are systematic rather than random:
+
+- **A narrower internal implementation claiming `EQUIVALENT` with a broader
+  external control.** A cloud-only clock-synchronisation rule was judged
+  equivalent to a control requiring synchronisation across the whole
+  estate; correct answer `PARTIAL`. This pattern — real coverage of a real
+  subset, mistaken for full coverage — is the single most common downgrade,
+  and it is precisely the error a gap query cannot survive, because
+  `EQUIVALENT` tells the query to stop looking.
+- **Shared boilerplate judged `EQUIVALENT` to itself across documents.**
+  The template-reuse rule in §3 was learned here: 147 of the intra-corpus
+  downgrades were near-identical clauses whose *wording* matched but whose
+  *object* differed in each instance.
+
+Both are cases where the first pass was reasonable and wrong in the
+expensive direction. Neither would have been caught by re-asking the same
+model to check its own work.
 
 **Conflict flagging for intra-corpus contradictions.** When adjudicating
 pairs within your own document set (§8) rather than against an external
@@ -502,11 +525,35 @@ independently.
 
 ## 9. Cost and scale
 
-This methodology was built out against a reference deployment mapping
-five public frameworks and an internal policy estate of roughly 113
-documents into one graph — 2,400+ nodes and 10,000+ typed relationships,
-of which around 14,600 candidate pairs went through adjudication (stage 5
-and its stage-6 verification pass) to get there.
+This methodology was built out against a reference deployment mapping five
+public frameworks (NCSC CAF 4.0, ISO 27001, ISO 27002, ISO 42001, NHS DSPT)
+and an internal policy estate of roughly 113 documents into one graph. The
+measured funnel:
+
+| Stage | Count |
+|---|---|
+| Nodes decomposed from source | 2,322 |
+| Mappable leaf nodes (canonicalised + embedded) | 1,595 |
+| Candidate pairs proposed (stage 4) | 14,436 |
+| Verdicts returned (stage 5) | 14,346 |
+| — `no_relation`, dropped | 6,112 (42.6%) |
+| — typed edges kept | 8,234 |
+| Verdicts changed by refuter pass (stage 6) | 293 (61 edges removed) |
+| Typed edges loaded | 8,455 |
+| `CONTAINS` hierarchy edges | 2,084 |
+| **Total relationships in graph** | **10,539** |
+
+Final relation mix: `PARTIAL` 5,070 · `SUPPORTS` 2,898 · `EQUIVALENT` 278 ·
+`INFORMS` 209. The heavy skew toward `PARTIAL` over `EQUIVALENT` (18:1) is
+the calibration rules in §3 working — harmonised clauses and reused
+boilerplate are `PARTIAL` by rule, and an adjudicator left to its own
+instincts produces far more `EQUIVALENT` than survives scrutiny.
+
+That 42.6% rejection rate is not a defect in candidate generation; it is
+the recall-first tuning in §5 behaving as designed. A candidate stage that
+proposed only pairs that survived adjudication would be a candidate stage
+tuned too tight, and the pairs it silently failed to propose would never be
+recoverable.
 
 Two things kept that affordable:
 
